@@ -1,25 +1,30 @@
-const sounds = ['applause', 'beeps', 'bubbles', 'camera', 'clay', 'confetti'];
+// 1. Array of sound names based on your provided screenshot
+const sounds = ['applause', 'boo', 'gasp', 'tada', 'victory', 'wrong'];
 
+// 2. Loop through the array to create buttons dynamically
 sounds.forEach(sound => {
-    // Create a button for each sound
     const btn = document.createElement('button');
-    btn.classList.add('btn'); // Requirement: class as btn
-
+    
+    // Requirement: Set class as 'btn'
+    btn.classList.add('btn');
+    
     btn.innerText = sound;
 
+    // Event listener to play the specific sound
     btn.addEventListener('click', () => {
-        stopSongs(); // Stop other sounds before playing this one
-
+        stopSongs(); // Ensure only one sound plays at a time
         document.getElementById(sound).play();
     });
 
     document.getElementById('buttons').appendChild(btn);
 });
 
-// Create the Stop button
+// 3. Create the Stop Button separately
 const stopBtn = document.createElement('button');
-stopBtn.classList.add('stop'); // Requirement: class as stop
-stopBtn.innerText = 'STOP';
+
+// Requirement: Set class as 'stop'
+stopBtn.classList.add('stop');
+stopBtn.innerText = 'stop';
 
 stopBtn.addEventListener('click', () => {
     stopSongs();
@@ -27,10 +32,13 @@ stopBtn.addEventListener('click', () => {
 
 document.getElementById('buttons').appendChild(stopBtn);
 
+// 4. Helper function to stop all audio and reset progress
 function stopSongs() {
     sounds.forEach(sound => {
         const song = document.getElementById(sound);
-        song.pause();
-        song.currentTime = 0; // Reset the audio to the beginning
+        if (song) {
+            song.pause();
+            song.currentTime = 0; // Rewind to the start
+        }
     });
 }
